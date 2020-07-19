@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/overviewFragment">
+
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.example.mytodolist.overview.OverviewFragment"
+        android:label="OverviewFragment">
+        <action
+            android:id="@+id/action_overviewFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+        <argument
+            android:name="currentNoteId"
+            app:argType="long" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.mytodolist.addnote.AddNoteFragment"
+        android:label="AddNoteFragment" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.example.mytodolist.editnote.EditNoteFragment"
+        android:label="EditNoteFragment" >
+        <action
+            android:id="@+id/action_editNoteFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment" />
+        <argument
+            android:name="currentNoteId"
+            app:argType="long" />
+
+    </fragment>
+
+</navigation>

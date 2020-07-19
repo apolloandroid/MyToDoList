@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Primary color-->
+    <color name="colorPrimary">#1e88e5</color>
+    <color name="colorPrimaryDark">#005cb2</color>
+    <color name="colorPrimaryLight">#6ab7ff</color>
+    <!--Secondary color-->
+    <color name="colorSecondary">#26a69a</color>
+    <color name="colorSecondaryDark">#00766c</color>
+    <color name="colorSecondaryLight">#64d8cb</color>
+    <!--Text color-->
+    <color name="colorText">#000000</color>
+    <color name="colorTextLight">#FFFFFF</color>
+    <color name="color_edit_overview_border">#FFFFFF</color>
+
+</resources>
