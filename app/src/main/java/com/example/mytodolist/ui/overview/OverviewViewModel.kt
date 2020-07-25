@@ -11,60 +11,42 @@ import kotlinx.coroutines.*
 class OverviewViewModel constructor(
     private val repository: Repository,
     application: Application
-) :
-    AndroidViewModel(application) {
+) : AndroidViewModel(application) {
     private val overviewViewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + overviewViewModelJob)
-    val notes: LiveData<List<Note>> = repository.getAllNotes()
-    private val newNote = Note()
+    private val uiScope = CoroutineScope(Dispatchers.IO + overviewViewModelJob)
+
+    var notes: LiveData<List<Note>> = getAllNotes()
+
+    private
+    val newNote = Note()
 
     fun onSwipeLeft(note: Note) {
         uiScope.launch {
-            deleteNote(note)
+            repository.deleteNote(note.noteId)
         }
     }
 
     fun fastAddNote(noteText: String) {
         this.newNote.noteText = noteText
         uiScope.launch {
-            insertNewNote()
+            repository.insert(newNote)
         }
     }
 
     fun restoreNote(deletedNote: Note) {
         uiScope.launch {
-            restoreDeletedNote(deletedNote)
+            repository.insert(deletedNote)
         }
     }
 
     fun onCheckDoneClick(note: Note) {
         note.noteDone = !note.noteDone
         uiScope.launch {
-            updateNote(note)
-        }
-    }
-
-    private suspend fun deleteNote(note: Note) {
-        withContext(Dispatchers.IO) {
-            repository.deleteNote(note.noteId)
-        }
-    }
-
-    private suspend fun insertNewNote() {
-        withContext(Dispatchers.IO) {
-            repository.insert(newNote)
-        }
-    }
-
-    private suspend fun restoreDeletedNote(deletedNote: Note) {
-        withContext(Dispatchers.IO) {
-            repository.insert(deletedNote)
-        }
-    }
-
-    private suspend fun updateNote(note: Note) {
-        withContext(Dispatchers.IO) {
             repository.updateNote(note)
         }
+    }
+
+    private fun getAllNotes(): LiveData<List<Note>> {
+        return runBlocking { repository.getAllNotes() }
     }
 }

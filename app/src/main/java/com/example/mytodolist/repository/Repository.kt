@@ -18,24 +18,24 @@ class Repository private constructor(application: Application) {
         }
     }
 
-    fun insert(note: Note) {
+    suspend fun insert(note: Note) {
         noteDatabaseDao.insert(note)
     }
 
-    fun updateNote(note: Note) {
+    suspend fun updateNote(note: Note) {
         noteDatabaseDao.updateNote(note)
     }
 
-    fun getNote(noteId: Long): Note? =
+    suspend fun getNote(noteId: Long): Note? =
         noteDatabaseDao.getNote(noteId)
 
-    fun deleteNote(noteId: Long) {
+    suspend fun deleteNote(noteId: Long) {
         noteDatabaseDao.deleteNote(noteId)
     }
 
-    fun clear() {
+    suspend fun clear() {
         noteDatabaseDao.clear()
     }
 
-    fun getAllNotes(): LiveData<List<Note>> = noteDatabaseDao.getAllNotes()
+    suspend fun getAllNotes(): LiveData<List<Note>> = noteDatabaseDao.getAllNotes()
 }

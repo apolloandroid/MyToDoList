@@ -75,7 +75,6 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
         if (binding.editNoteOverview.text!!.isNotEmpty())
             overviewViewModel.fastAddNote(binding.editNoteOverview.text.toString())
         binding.editNoteOverview.text.clear()
-//        binding.editNoteOverview.hideKeyboard()
     }
 
     override fun onNoteItemClicked(position: Int, noteItem: Note) {
@@ -86,11 +85,5 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
 
     override fun onCheckDoneClicked(position: Int, noteItem: Note) {
         overviewViewModel.onCheckDoneClick(noteItem)
-    }
-
-    private fun View.hideKeyboard() {
-        val inputMethodManager =
-            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
