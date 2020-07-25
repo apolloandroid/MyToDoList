@@ -22,15 +22,15 @@ class Repository private constructor(application: Application) {
         noteDatabaseDao.insert(note)
     }
 
-    fun update(note: Note) {
-        noteDatabaseDao.update(note)
+    fun updateNote(note: Note) {
+        noteDatabaseDao.updateNote(note)
     }
 
-    fun get(noteId: Long): Note? =
-        noteDatabaseDao.get(noteId)
+    fun getNote(noteId: Long): Note? =
+        noteDatabaseDao.getNote(noteId)
 
-    fun delete(noteId: Long) {
-        noteDatabaseDao.delete(noteId)
+    fun deleteNote(noteId: Long) {
+        noteDatabaseDao.deleteNote(noteId)
     }
 
     fun clear() {

@@ -46,7 +46,7 @@ class OverviewViewModel constructor(
 
     private suspend fun deleteNote(note: Note) {
         withContext(Dispatchers.IO) {
-            repository.delete(note.noteId)
+            repository.deleteNote(note.noteId)
         }
     }
 
@@ -64,7 +64,7 @@ class OverviewViewModel constructor(
 
     private suspend fun updateNote(note: Note) {
         withContext(Dispatchers.IO) {
-            repository.update(note)
+            repository.updateNote(note)
         }
     }
 }

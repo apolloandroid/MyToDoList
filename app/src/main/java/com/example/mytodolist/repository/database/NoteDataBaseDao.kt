@@ -9,13 +9,13 @@ interface NoteDataBaseDao {
     fun insert(note: Note)
 
     @Update
-    fun update(note: Note)
+    fun updateNote(note: Note)
 
     @Query("SELECT * FROM notes where noteId = :noteId")
-    fun get(noteId: Long): Note?
+    fun getNote(noteId: Long): Note?
 
     @Query("DELETE FROM notes where noteId = :noteId")
-    fun delete(noteId: Long)
+    fun deleteNote(noteId: Long)
 
     @Query("DELETE FROM notes")
     fun clear()

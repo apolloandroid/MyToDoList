@@ -35,13 +35,13 @@ class EditNoteViewModel(
 
     private suspend fun updateNote(note: Note) {
         withContext(Dispatchers.IO) {
-            repository.update(note)
+            repository.updateNote(note)
         }
     }
 
     private suspend fun initCurrentNote(noteId: Long) {
         withContext(Dispatchers.IO) {
-            _currentNote.postValue(repository.get(noteId))
+            _currentNote.postValue(repository.getNote(noteId))
         }
     }
 }
