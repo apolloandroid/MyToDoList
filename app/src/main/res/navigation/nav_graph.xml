@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/overviewFragment"
-        android:name="com.example.mytodolist.overview.OverviewFragment"
+        android:name="com.example.mytodolist.ui.overview.OverviewFragment"
         android:label="OverviewFragment">
         <action
             android:id="@+id/action_overviewFragment_to_addNoteFragment"
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/addNoteFragment"
-        android:name="com.example.mytodolist.addnote.AddNoteFragment"
+        android:name="com.example.mytodolist.ui.addnote.AddNoteFragment"
         android:label="AddNoteFragment" >
         <action
             android:id="@+id/action_addNoteFragment_to_overviewFragment"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
-        android:name="com.example.mytodolist.editnote.EditNoteFragment"
+        android:name="com.example.mytodolist.ui.editnote.EditNoteFragment"
         android:label="EditNoteFragment" >
         <action
             android:id="@+id/action_editNoteFragment_to_overviewFragment"

@@ -31,9 +31,10 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
     // Support libraries
     implementation "androidx.appcompat:appcompat:1.0.2"
@@ -43,10 +44,12 @@ dependencies {
     // Android KTX
     implementation 'androidx.core:core-ktx:1.0.1'
 
-    // Room and Lifecycle dependencies
+    // Room
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$room_version"
+
+    // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
     // Coroutines
@@ -61,6 +64,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    // Dependency Injection
     implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:3.1.0'
     implementation 'com.github.stephanenicolas.toothpick:smoothie-androidx:3.1.0'
     annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.1.0'

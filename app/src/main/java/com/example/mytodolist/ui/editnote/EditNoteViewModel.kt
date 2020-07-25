@@ -1,4 +1,4 @@
-package com.example.mytodolist.editnote
+package com.example.mytodolist.ui.editnote
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
-import com.example.mytodolist.repository.database.NoteDataBaseDao
 import kotlinx.coroutines.*
 
 

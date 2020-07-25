@@ -1,4 +1,4 @@
-package com.example.mytodolist.overview
+package com.example.mytodolist.ui.overview
 
 import android.content.Context
 import android.os.Bundle
@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentOverviewBinding
-import com.example.mytodolist.overview.NotesListAdapter.NoteViewHolder
-import com.example.mytodolist.overview.NotesListAdapter.OnCheckDoneClickListener
+import com.example.mytodolist.ui.overview.NotesListAdapter.NoteViewHolder
+import com.example.mytodolist.ui.overview.NotesListAdapter.OnCheckDoneClickListener
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
 import com.google.android.material.snackbar.Snackbar

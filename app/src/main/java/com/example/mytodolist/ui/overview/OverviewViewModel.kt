@@ -1,11 +1,10 @@
-package com.example.mytodolist.overview
+package com.example.mytodolist.ui.overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
-import com.example.mytodolist.repository.database.NoteDataBaseDao
 import kotlinx.coroutines.*
 
 

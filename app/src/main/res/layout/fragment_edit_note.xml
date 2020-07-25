@@ -41,6 +41,6 @@
 
         <variable
             name="viewModel"
-            type="com.example.mytodolist.editnote.EditNoteViewModel" />
+            type="com.example.mytodolist.ui.editnote.EditNoteViewModel" />
     </data>
 </layout>

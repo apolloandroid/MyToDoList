@@ -1,4 +1,4 @@
-package com.example.mytodolist.editnote
+package com.example.mytodolist.ui.editnote
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentEditNoteBinding
 import com.example.mytodolist.repository.Repository
-//import com.example.mytodolist.overview.OverviewFragmentArgs
-import com.example.mytodolist.repository.database.NoteDatabase
+//import com.example.mytodolist.ui.overview.OverviewFragmentArgs
 
 class EditNoteFragment : Fragment() {
     private lateinit var editNoteViewModel: EditNoteViewModel

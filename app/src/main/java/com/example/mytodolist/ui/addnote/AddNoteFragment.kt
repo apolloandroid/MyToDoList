@@ -1,4 +1,4 @@
-package com.example.mytodolist.addnote
+package com.example.mytodolist.ui.addnote
 
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.AddNoteFragmentBinding
 import com.example.mytodolist.repository.Repository
-import com.example.mytodolist.repository.database.NoteDatabase
 
 class AddNoteFragment : Fragment() {
     private lateinit var addNoteViewModel: AddNoteViewModel

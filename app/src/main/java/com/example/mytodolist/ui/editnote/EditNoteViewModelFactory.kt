@@ -1,20 +1,20 @@
-package com.example.mytodolist.addnote
+package com.example.mytodolist.ui.editnote
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytodolist.repository.Repository
-import com.example.mytodolist.repository.database.NoteDataBaseDao
 import java.lang.IllegalArgumentException
 
-class AddNoteViewModelFactory(
+class EditNoteViewModelFactory(
     private val repository: Repository,
-    private val application: Application
+    private val application: Application,
+    private val currentNoteId:Long
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddNoteViewModel::class.java)) {
-            return AddNoteViewModel(repository, application) as T
+        if (modelClass.isAssignableFrom(EditNoteViewModel::class.java)) {
+            return EditNoteViewModel(repository, application, currentNoteId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,4 +1,4 @@
-package com.example.mytodolist.overview
+package com.example.mytodolist.ui.overview
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
