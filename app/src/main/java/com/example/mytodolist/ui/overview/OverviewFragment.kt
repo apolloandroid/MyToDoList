@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -19,11 +18,13 @@ import com.example.mytodolist.ui.overview.NotesListAdapter.OnCheckDoneClickListe
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<Note>,
     OnCheckDoneClickListener<Note> {
     private lateinit var overviewViewModel: OverviewViewModel
     private lateinit var binding: FragmentOverviewBinding
+    private lateinit var notesListAdapter: NotesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,7 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
         binding.buttonFastCreateNote.setOnClickListener { onCreateFastNoteListener() }
         initNotesList(binding.notesList)
         overviewViewModel.notes.observe(viewLifecycleOwner, Observer { notes ->
-            NotesListAdapter.submitList(notes)
+            notesListAdapter.submitList(notes)
         })
         return binding.root
     }
@@ -48,9 +49,10 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
     }
 
     private fun initNotesList(recyclerView: RecyclerView) {
-        recyclerView.adapter = NotesListAdapter
-        NotesListAdapter.onItemClickListener = this
-        NotesListAdapter.onCheckDoneClickListener = this
+        notesListAdapter = NotesListAdapter(overviewViewModel.notes.value)
+        recyclerView.adapter = notesListAdapter
+        notesListAdapter.onItemClickListener = this
+        notesListAdapter.onCheckDoneClickListener = this
         val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
         recyclerView.setHasFixedSize(true)
         noteTouchHelper.attachToRecyclerView(binding.notesList)
@@ -59,11 +61,23 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
     private fun initSwipeHelper(): NoteTouchHelper = object : NoteTouchHelper() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val holder = viewHolder as NoteViewHolder
-            var currentNote = NotesListAdapter.getNoteAt(holder.adapterPosition)
-            overviewViewModel.onSwipeLeft(NotesListAdapter.getNoteAt(holder.adapterPosition))
+            var currentNote = notesListAdapter.getNoteAt(holder.adapterPosition)
+            overviewViewModel.onSwipeLeft(notesListAdapter.getNoteAt(holder.adapterPosition))
             Snackbar.make(binding.root, "Deleted", Snackbar.LENGTH_LONG).setAction("UNDO") {
                 overviewViewModel.restoreNote(currentNote)
             }.show()
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            val fromPosition = viewHolder.adapterPosition
+            val toPosition = target.adapterPosition
+            overviewViewModel.onMove(fromPosition, toPosition)
+            binding.notesList.adapter?.notifyItemMoved(fromPosition, toPosition)
+            return false
         }
     }
 

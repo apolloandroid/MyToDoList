@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
 import kotlinx.coroutines.*
+import java.util.*
 
 
 class OverviewViewModel constructor(
@@ -17,8 +18,7 @@ class OverviewViewModel constructor(
 
     var notes: LiveData<List<Note>> = getAllNotes()
 
-    private
-    val newNote = Note()
+    private val newNote = Note()
 
     fun onSwipeLeft(note: Note) {
         uiScope.launch {
@@ -44,6 +44,10 @@ class OverviewViewModel constructor(
         uiScope.launch {
             repository.updateNote(note)
         }
+    }
+
+    fun onMove(fromPosition:Int, toPosition:Int){
+        Collections.swap(notes.value, fromPosition, toPosition)
     }
 
     private fun getAllNotes(): LiveData<List<Note>> {

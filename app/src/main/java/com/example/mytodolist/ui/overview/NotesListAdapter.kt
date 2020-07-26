@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.repository.database.Note
+import java.util.ArrayList
 
-object NotesListAdapter
-    : ListAdapter<Note, NotesListAdapter.NoteViewHolder>(NotesDiffCallBack()) {
+class NotesListAdapter(notes: List<Note>?) :
+    ListAdapter<Note, NotesListAdapter.NoteViewHolder>(NotesDiffCallBack()) {
     lateinit var onItemClickListener: OnNoteItemClickListener<Note>
     lateinit var onCheckDoneClickListener: OnCheckDoneClickListener<Note>
+    val notesList = notes
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -51,6 +53,7 @@ object NotesListAdapter
             holder.noteText.paintFlags = Paint.ANTI_ALIAS_FLAG
             holder.noteText.setTextColor(Color.BLACK)
         }
+
     }
 
     fun getNoteAt(position: Int): Note = getItem(position)
@@ -61,7 +64,7 @@ object NotesListAdapter
         val checkDoneNote: CheckBox = itemView.findViewById(R.id.check_done)
     }
 
-    class NotesDiffCallBack : DiffUtil.ItemCallback<Note>() {
+    private class NotesDiffCallBack : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
             return oldItem.noteId == newItem.noteId
         }
