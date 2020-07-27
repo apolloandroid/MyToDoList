@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 
-open class NoteTouchHelper : ItemTouchHelper.Callback() {
-
+open class NoteTouchHelper(/*private val noteTouchHelperAdapter: NoteTouchHelperAdapter*/) :
+    ItemTouchHelper.Callback() {
     override fun isLongPressDragEnabled(): Boolean {
         return true
     }
@@ -26,7 +26,7 @@ open class NoteTouchHelper : ItemTouchHelper.Callback() {
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
         if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-            viewHolder?.itemView?.setBackgroundColor(Color.GRAY)
+            viewHolder?.itemView?.setBackgroundColor(Color.LTGRAY)
         }
     }
 
@@ -40,7 +40,7 @@ open class NoteTouchHelper : ItemTouchHelper.Callback() {
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
+//        noteTouchHelperAdapter.onNoteSwipe(viewHolder.adapterPosition)
     }
 
     override fun onMove(
@@ -48,6 +48,7 @@ open class NoteTouchHelper : ItemTouchHelper.Callback() {
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
+//        noteTouchHelperAdapter.onNoteMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 }

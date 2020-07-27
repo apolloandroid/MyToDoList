@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 const val NOTE_DATABASE_NAME = "Notes"
 
-@Database(entities = [Note::class], version = 7, exportSchema = false)
+@Database(entities = [Note::class], version = 9, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract val noteDataBaseDao: NoteDataBaseDao

@@ -1,5 +1,6 @@
 package com.example.mytodolist.repository.database
 
+import android.content.EntityIterator
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,6 +1,5 @@
 package com.example.mytodolist.ui.overview
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import com.example.mytodolist.ui.overview.NotesListAdapter.OnCheckDoneClickListe
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
 import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<Note>,
     OnCheckDoneClickListener<Note> {
@@ -33,7 +31,7 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
         overviewViewModel = initViewModel()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
         binding.buttonCreateNote.setOnClickListener { onCreateNoteListener() }
-        binding.buttonFastCreateNote.setOnClickListener { onCreateFastNoteListener() }
+        binding.buttonFastCreateNote.setOnClickListener { onCreateQuickNoteListener() }
         initNotesList(binding.notesList)
         overviewViewModel.notes.observe(viewLifecycleOwner, Observer { notes ->
             notesListAdapter.submitList(notes)
@@ -73,10 +71,10 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            val fromPosition = viewHolder.adapterPosition
-            val toPosition = target.adapterPosition
-            overviewViewModel.onMove(fromPosition, toPosition)
-            binding.notesList.adapter?.notifyItemMoved(fromPosition, toPosition)
+            val fromNote = notesListAdapter.getNoteAt(viewHolder.adapterPosition)
+            val toNote = notesListAdapter.getNoteAt(target.adapterPosition)
+            overviewViewModel.onMove(fromNote, toNote)
+            binding.notesList.adapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
             return false
         }
     }
@@ -85,7 +83,7 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
         findNavController().navigate(R.id.action_overviewFragment_to_addNoteFragment)
     }
 
-    private fun onCreateFastNoteListener() {
+    private fun onCreateQuickNoteListener() {
         if (binding.editNoteOverview.text!!.isNotEmpty())
             overviewViewModel.fastAddNote(binding.editNoteOverview.text.toString())
         binding.editNoteOverview.text.clear()

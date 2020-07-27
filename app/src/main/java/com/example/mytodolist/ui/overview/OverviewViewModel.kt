@@ -1,6 +1,7 @@
 package com.example.mytodolist.ui.overview
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.mytodolist.repository.Repository
@@ -17,7 +18,6 @@ class OverviewViewModel constructor(
     private val uiScope = CoroutineScope(Dispatchers.IO + overviewViewModelJob)
 
     var notes: LiveData<List<Note>> = getAllNotes()
-
     private val newNote = Note()
 
     fun onSwipeLeft(note: Note) {
@@ -27,7 +27,7 @@ class OverviewViewModel constructor(
     }
 
     fun fastAddNote(noteText: String) {
-        this.newNote.noteText = noteText
+        newNote.noteText = noteText
         uiScope.launch {
             repository.insert(newNote)
         }
@@ -46,8 +46,12 @@ class OverviewViewModel constructor(
         }
     }
 
-    fun onMove(fromPosition:Int, toPosition:Int){
-        Collections.swap(notes.value, fromPosition, toPosition)
+    fun onMove(fromNote: Note, toNote: Note) {
+        uiScope.launch {
+            repository.updateNote(fromNote)
+            repository.updateNote(toNote)
+
+        }
     }
 
     private fun getAllNotes(): LiveData<List<Note>> {

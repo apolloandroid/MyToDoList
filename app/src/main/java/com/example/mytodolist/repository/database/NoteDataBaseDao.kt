@@ -20,6 +20,6 @@ interface NoteDataBaseDao {
     @Query("DELETE FROM notes")
     fun clear()
 
-    @Query("SELECT * FROM notes ORDER BY noteId DESC ")
+    @Query("SELECT * FROM notes ORDER BY noteId DESC")
     fun getAllNotes(): LiveData<List<Note>>
 }
