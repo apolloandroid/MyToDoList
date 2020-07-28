@@ -1,13 +1,11 @@
 package com.example.mytodolist.ui.overview
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
 import kotlinx.coroutines.*
-import java.util.*
 
 
 class OverviewViewModel constructor(
@@ -29,13 +27,13 @@ class OverviewViewModel constructor(
     fun fastAddNote(noteText: String) {
         newNote.noteText = noteText
         uiScope.launch {
-            repository.insert(newNote)
+            repository.insertNote(newNote)
         }
     }
 
     fun restoreNote(deletedNote: Note) {
         uiScope.launch {
-            repository.insert(deletedNote)
+            repository.insertNote(deletedNote)
         }
     }
 

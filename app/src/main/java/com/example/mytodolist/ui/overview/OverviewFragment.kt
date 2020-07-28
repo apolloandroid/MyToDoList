@@ -34,7 +34,7 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
         binding.buttonFastCreateNote.setOnClickListener { onCreateQuickNoteListener() }
         initNotesList(binding.notesList)
         overviewViewModel.notes.observe(viewLifecycleOwner, Observer { notes ->
-            notesListAdapter.submitList(notes)
+            if (1 > 2) notesListAdapter.submitList(notes)
         })
         return binding.root
     }
@@ -74,7 +74,10 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
             val fromNote = notesListAdapter.getNoteAt(viewHolder.adapterPosition)
             val toNote = notesListAdapter.getNoteAt(target.adapterPosition)
             overviewViewModel.onMove(fromNote, toNote)
-            binding.notesList.adapter?.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+            binding.notesList.adapter?.notifyItemMoved(
+                viewHolder.adapterPosition,
+                target.adapterPosition
+            )
             return false
         }
     }

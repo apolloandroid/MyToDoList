@@ -21,7 +21,7 @@ class AddNoteViewModel(private val repository: Repository, application: Applicat
 
     private suspend fun insertNewNote() {
         withContext(Dispatchers.IO) {
-            repository.insert(newNote)
+            repository.insertNote(newNote)
         }
     }
 }
