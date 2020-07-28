@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentEditNoteBinding
 import com.example.mytodolist.repository.Repository
-//import com.example.mytodolist.ui.overview.OverviewFragmentArgs
 
 class EditNoteFragment : Fragment() {
     private lateinit var editNoteViewModel: EditNoteViewModel
@@ -27,7 +26,7 @@ class EditNoteFragment : Fragment() {
         binding.buttonEditNote.setOnClickListener {
             onEditNoteButtonListener(binding.editNoteText.text.toString())
         }
-        editNote(currentNoteId)
+        showCurrentNoteText(currentNoteId)
         editNoteViewModel.currentNote.observe(viewLifecycleOwner, Observer { currentNote ->
             binding.editNoteText.text?.insert(0, currentNote.noteText)
         })
@@ -42,12 +41,12 @@ class EditNoteFragment : Fragment() {
         return editNoteViewModelFactory.create(EditNoteViewModel::class.java)
     }
 
-    private fun editNote(currentNoteId: Long) {
-        editNoteViewModel.editNote(currentNoteId)
+    private fun showCurrentNoteText(currentNoteId: Long) {
+        editNoteViewModel.showCurrentNoteText(currentNoteId)
     }
 
     private fun onEditNoteButtonListener(currentNoteText: String) {
-        editNoteViewModel.refreshNote(currentNoteText)
+        editNoteViewModel.updateNote(currentNoteText)
         findNavController().navigate(
             EditNoteFragmentDirections.actionEditNoteFragmentToOverviewFragment(
                 0

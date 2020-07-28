@@ -13,29 +13,23 @@ class EditNoteViewModel(
     private val repository: Repository, application: Application, private val currentNoteId: Long
 ) : AndroidViewModel(application) {
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     private var _currentNote = MutableLiveData<Note>()
     val currentNote: LiveData<Note>
         get() = _currentNote
 
-    fun editNote(currentNoteId: Long) {
+    fun showCurrentNoteText(currentNoteId: Long) {
         uiScope.launch {
             initCurrentNote(currentNoteId)
         }
     }
 
-    fun refreshNote(currentNoteText: String) {
+    fun updateNote(currentNoteText: String) {
         if (currentNoteText == "") return
         _currentNote.value?.noteText = currentNoteText
         uiScope.launch {
-            updateNote(_currentNote.value as Note)
-        }
-    }
-
-    private suspend fun updateNote(note: Note) {
-        withContext(Dispatchers.IO) {
-            repository.updateNote(note)
+            repository.updateNote(_currentNote.value as Note)
         }
     }
 

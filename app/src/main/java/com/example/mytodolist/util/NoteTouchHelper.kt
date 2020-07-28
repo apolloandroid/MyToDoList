@@ -1,11 +1,11 @@
-package com.example.mytodolist.ui.overview
+package com.example.mytodolist.util
 
 import android.graphics.Color
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 
-open class NoteTouchHelper(/*private val noteTouchHelperAdapter: NoteTouchHelperAdapter*/) :
+open class NoteTouchHelper :
     ItemTouchHelper.Callback() {
     override fun isLongPressDragEnabled(): Boolean {
         return true
@@ -40,7 +40,6 @@ open class NoteTouchHelper(/*private val noteTouchHelperAdapter: NoteTouchHelper
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//        noteTouchHelperAdapter.onNoteSwipe(viewHolder.adapterPosition)
     }
 
     override fun onMove(
@@ -48,7 +47,6 @@ open class NoteTouchHelper(/*private val noteTouchHelperAdapter: NoteTouchHelper
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-//        noteTouchHelperAdapter.onNoteMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 }

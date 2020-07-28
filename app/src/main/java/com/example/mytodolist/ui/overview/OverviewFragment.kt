@@ -16,25 +16,24 @@ import com.example.mytodolist.ui.overview.NotesListAdapter.NoteViewHolder
 import com.example.mytodolist.ui.overview.NotesListAdapter.OnCheckDoneClickListener
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.Note
+import com.example.mytodolist.util.NoteTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
 class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<Note>,
     OnCheckDoneClickListener<Note> {
-    private lateinit var overviewViewModel: OverviewViewModel
+    private val overviewViewModel: OverviewViewModel by lazy { initViewModel() }
     private lateinit var binding: FragmentOverviewBinding
-    private lateinit var notesListAdapter: NotesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        overviewViewModel = initViewModel()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
         binding.buttonCreateNote.setOnClickListener { onCreateNoteListener() }
         binding.buttonFastCreateNote.setOnClickListener { onCreateQuickNoteListener() }
         initNotesList(binding.notesList)
         overviewViewModel.notes.observe(viewLifecycleOwner, Observer { notes ->
-            if (1 > 2) notesListAdapter.submitList(notes)
+            NotesListAdapter.submitList(notes)
         })
         return binding.root
     }
@@ -47,10 +46,9 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
     }
 
     private fun initNotesList(recyclerView: RecyclerView) {
-        notesListAdapter = NotesListAdapter(overviewViewModel.notes.value)
-        recyclerView.adapter = notesListAdapter
-        notesListAdapter.onItemClickListener = this
-        notesListAdapter.onCheckDoneClickListener = this
+        recyclerView.adapter = NotesListAdapter
+        NotesListAdapter.onItemClickListener = this
+        NotesListAdapter.onCheckDoneClickListener = this
         val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
         recyclerView.setHasFixedSize(true)
         noteTouchHelper.attachToRecyclerView(binding.notesList)
@@ -59,26 +57,11 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
     private fun initSwipeHelper(): NoteTouchHelper = object : NoteTouchHelper() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val holder = viewHolder as NoteViewHolder
-            var currentNote = notesListAdapter.getNoteAt(holder.adapterPosition)
-            overviewViewModel.onSwipeLeft(notesListAdapter.getNoteAt(holder.adapterPosition))
+            var currentNote = NotesListAdapter.getNoteAt(holder.adapterPosition)
+            overviewViewModel.onSwipeNote(NotesListAdapter.getNoteAt(holder.adapterPosition))
             Snackbar.make(binding.root, "Deleted", Snackbar.LENGTH_LONG).setAction("UNDO") {
-                overviewViewModel.restoreNote(currentNote)
+                overviewViewModel.restoreDeletedNote(currentNote)
             }.show()
-        }
-
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromNote = notesListAdapter.getNoteAt(viewHolder.adapterPosition)
-            val toNote = notesListAdapter.getNoteAt(target.adapterPosition)
-            overviewViewModel.onMove(fromNote, toNote)
-            binding.notesList.adapter?.notifyItemMoved(
-                viewHolder.adapterPosition,
-                target.adapterPosition
-            )
-            return false
         }
     }
 
@@ -88,7 +71,7 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
 
     private fun onCreateQuickNoteListener() {
         if (binding.editNoteOverview.text!!.isNotEmpty())
-            overviewViewModel.fastAddNote(binding.editNoteOverview.text.toString())
+            overviewViewModel.createQuickNote(binding.editNoteOverview.text.toString())
         binding.editNoteOverview.text.clear()
     }
 

@@ -18,20 +18,20 @@ class OverviewViewModel constructor(
     var notes: LiveData<List<Note>> = getAllNotes()
     private val newNote = Note()
 
-    fun onSwipeLeft(note: Note) {
+    fun onSwipeNote(note: Note) {
         uiScope.launch {
             repository.deleteNote(note.noteId)
         }
     }
 
-    fun fastAddNote(noteText: String) {
+    fun createQuickNote(noteText: String) {
         newNote.noteText = noteText
         uiScope.launch {
             repository.insertNote(newNote)
         }
     }
 
-    fun restoreNote(deletedNote: Note) {
+    fun restoreDeletedNote(deletedNote: Note) {
         uiScope.launch {
             repository.insertNote(deletedNote)
         }
@@ -41,14 +41,6 @@ class OverviewViewModel constructor(
         note.noteDone = !note.noteDone
         uiScope.launch {
             repository.updateNote(note)
-        }
-    }
-
-    fun onMove(fromNote: Note, toNote: Note) {
-        uiScope.launch {
-            repository.updateNote(fromNote)
-            repository.updateNote(toNote)
-
         }
     }
 

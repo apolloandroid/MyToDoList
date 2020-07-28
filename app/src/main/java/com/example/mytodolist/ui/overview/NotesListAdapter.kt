@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.repository.database.Note
 
-class NotesListAdapter(notes: List<Note>?) : ListAdapter<Note, NotesListAdapter.NoteViewHolder>(NotesDiffCallBack()) {
+object NotesListAdapter : ListAdapter<Note, NotesListAdapter.NoteViewHolder>(NotesDiffCallBack()) {
     lateinit var onItemClickListener: OnNoteItemClickListener<Note>
     lateinit var onCheckDoneClickListener: OnCheckDoneClickListener<Note>
 
@@ -33,16 +33,16 @@ class NotesListAdapter(notes: List<Note>?) : ListAdapter<Note, NotesListAdapter.
         }
 
         holder.checkDoneNote.isChecked = currentNote.noteDone
-        setText(holder, holder.checkDoneNote, holder.noteText)
+        setNoteText(holder, holder.checkDoneNote, holder.noteText)
         holder.checkDoneNote.setOnClickListener {
             if (position != RecyclerView.NO_POSITION) {
                 onCheckDoneClick(position)
             }
-            setText(holder, holder.checkDoneNote, holder.noteText)
+            setNoteText(holder, holder.checkDoneNote, holder.noteText)
         }
     }
 
-    private fun setText(holder: NoteViewHolder, checkDoneNote: CheckBox, noteTextView: TextView) {
+    private fun setNoteText(holder: NoteViewHolder, checkDoneNote: CheckBox, noteTextView: TextView) {
         if (holder.checkDoneNote.isChecked) {
             holder.noteText.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             holder.noteText.setTextColor(Color.GRAY)
