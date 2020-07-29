@@ -21,7 +21,7 @@ class EditNoteViewModel(
 
     fun showCurrentNoteText(currentNoteId: Long) {
         uiScope.launch {
-            initCurrentNote(currentNoteId)
+            _currentNote.postValue(repository.getNote(currentNoteId))
         }
     }
 
@@ -30,12 +30,6 @@ class EditNoteViewModel(
         _currentNote.value?.noteText = currentNoteText
         uiScope.launch {
             repository.updateNote(_currentNote.value as Note)
-        }
-    }
-
-    private suspend fun initCurrentNote(noteId: Long) {
-        withContext(Dispatchers.IO) {
-            _currentNote.postValue(repository.getNote(noteId))
         }
     }
 }

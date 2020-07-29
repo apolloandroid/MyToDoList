@@ -21,9 +21,7 @@ class AddNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater, R.layout.add_note_fragment, container, false
-        )
+        binding = DataBindingUtil.inflate(inflater, R.layout.add_note_fragment, container, false)
         addNoteViewModel = initViewModel()
         binding.buttonAddNote.setOnClickListener {
             onAddButtonClickListener()
