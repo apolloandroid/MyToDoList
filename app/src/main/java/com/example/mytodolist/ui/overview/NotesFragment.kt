@@ -11,44 +11,46 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
-import com.example.mytodolist.databinding.FragmentOverviewBinding
+import com.example.mytodolist.databinding.FragmentNotesBinding
 import com.example.mytodolist.ui.overview.NotesListAdapter.NoteViewHolder
-import com.example.mytodolist.ui.overview.NotesListAdapter.OnCheckDoneClickListener
 import com.example.mytodolist.repository.Repository
-import com.example.mytodolist.repository.database.Note
 import com.example.mytodolist.util.NoteTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
-class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<Note>,
-    OnCheckDoneClickListener<Note> {
-    private val overviewViewModel: OverviewViewModel by lazy { initViewModel() }
-    private lateinit var binding: FragmentOverviewBinding
+class NotesFragment : Fragment(){
+    private val notesViewModel: NotesViewModel by lazy { initViewModel() }
+    private lateinit var binding: FragmentNotesBinding
+    private lateinit var notesListAdapter: NotesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_overview, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, container, false)
         binding.buttonCreateNote.setOnClickListener { onCreateNoteListener() }
         binding.buttonFastCreateNote.setOnClickListener { onCreateQuickNoteListener() }
         initNotesList(binding.notesList)
-        overviewViewModel.notes.observe(viewLifecycleOwner, Observer { notes ->
-            NotesListAdapter.submitList(notes)
+        notesViewModel.notes.observe(this, Observer { notes ->
+            notesListAdapter.submitList(notes)
+        })
+
+        notesViewModel.viewNoteDetails.observe(this, Observer {
+            navigateToNoteDetailFragment(it)
         })
         return binding.root
     }
 
-    private fun initViewModel(): OverviewViewModel {
+    private fun initViewModel(): NotesViewModel {
         val application = requireNotNull(activity).application
         val repository = Repository.getInstance(application)
-        val overviewViewModelFactory = OverviewViewModelFactory(repository, application)
-        return overviewViewModelFactory.create(OverviewViewModel::class.java)
+        val overviewViewModelFactory = NotesViewModelFactory(repository, application)
+        return overviewViewModelFactory.create(NotesViewModel::class.java)
     }
 
     private fun initNotesList(recyclerView: RecyclerView) {
-        recyclerView.adapter = NotesListAdapter
-        NotesListAdapter.onItemClickListener = this
-        NotesListAdapter.onCheckDoneClickListener = this
+        notesListAdapter = NotesListAdapter(notesViewModel)
+        recyclerView.adapter = notesListAdapter
+//        notesListAdapter.onCheckDoneClickListener = this
         val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
         recyclerView.setHasFixedSize(true)
         noteTouchHelper.attachToRecyclerView(binding.notesList)
@@ -57,31 +59,32 @@ class OverviewFragment : Fragment(), NotesListAdapter.OnNoteItemClickListener<No
     private fun initSwipeHelper(): NoteTouchHelper = object : NoteTouchHelper() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val holder = viewHolder as NoteViewHolder
-            var currentNote = NotesListAdapter.getNoteAt(holder.adapterPosition)
-            overviewViewModel.onSwipeNote(NotesListAdapter.getNoteAt(holder.adapterPosition))
+            var currentNote = notesListAdapter.getNoteAt(holder.adapterPosition)
+            notesViewModel.onSwipeNote(notesListAdapter.getNoteAt(holder.adapterPosition))
             Snackbar.make(binding.root, "Deleted", Snackbar.LENGTH_LONG).setAction("UNDO") {
-                overviewViewModel.restoreDeletedNote(currentNote)
+                notesViewModel.restoreDeletedNote(currentNote)
             }.show()
         }
     }
 
     private fun onCreateNoteListener() {
-        findNavController().navigate(R.id.action_overviewFragment_to_addNoteFragment)
+        findNavController().navigate(R.id.action_notesFragment_to_addNoteFragment)
     }
 
     private fun onCreateQuickNoteListener() {
         if (binding.editNoteOverview.text!!.isNotEmpty())
-            overviewViewModel.createQuickNote(binding.editNoteOverview.text.toString())
+            notesViewModel.createQuickNote(binding.editNoteOverview.text.toString())
         binding.editNoteOverview.text.clear()
     }
 
-    override fun onNoteItemClicked(position: Int, noteItem: Note) {
-        findNavController().navigate(
-            OverviewFragmentDirections.actionOverviewFragmentToEditNoteFragment(noteItem.noteId)
-        )
-    }
 
-    override fun onCheckDoneClicked(position: Int, noteItem: Note) {
-        overviewViewModel.onCheckDoneClick(noteItem)
+//    override fun onCheckDoneClicked(position: Int, noteItem: Note) {
+//        overviewViewModel.onCheckDoneClick(noteItem)
+//    }
+
+    private fun navigateToNoteDetailFragment(noteId: Long) {
+        findNavController().navigate(
+            NotesFragmentDirections.actionNotesFragmentToNoteDetailsFragment(noteId)
+        )
     }
 }

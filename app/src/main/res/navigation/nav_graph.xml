@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/overviewFragment">
+    app:startDestination="@id/notesFragment">
 
     <fragment
-        android:id="@+id/overviewFragment"
-        android:name="com.example.mytodolist.ui.overview.OverviewFragment"
-        android:label="OverviewFragment">
+        android:id="@+id/notesFragment"
+        android:name="com.example.mytodolist.ui.overview.NotesFragment"
+        android:label="NotesFragment">
         <action
-            android:id="@+id/action_overviewFragment_to_addNoteFragment"
+            android:id="@+id/action_notesFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
         <action
-            android:id="@+id/action_overviewFragment_to_editNoteFragment"
-            app:destination="@id/editNoteFragment" />
+            android:id="@+id/action_notesFragment_to_noteDetailsFragment"
+            app:destination="@id/noteDetailsFragment" />
         <argument
             android:name="currentNoteId"
             app:argType="long" />
@@ -26,16 +26,16 @@
         android:name="com.example.mytodolist.ui.addnote.AddNoteFragment"
         android:label="AddNoteFragment" >
         <action
-            android:id="@+id/action_addNoteFragment_to_overviewFragment"
-            app:destination="@id/overviewFragment" />
+            android:id="@+id/action_addNoteFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editNoteFragment"
-        android:name="com.example.mytodolist.ui.editnote.EditNoteFragment"
-        android:label="EditNoteFragment" >
+        android:id="@+id/noteDetailsFragment"
+        android:name="com.example.mytodolist.ui.editnote.NoteDetailsFragment"
+        android:label="NoteDetailsFragment" >
         <action
-            android:id="@+id/action_editNoteFragment_to_overviewFragment"
-            app:destination="@id/overviewFragment" />
+            android:id="@+id/action_noteDetailsFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
         <argument
             android:name="currentNoteId"
             app:argType="long" />

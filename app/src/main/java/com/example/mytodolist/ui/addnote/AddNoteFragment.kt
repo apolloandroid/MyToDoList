@@ -40,7 +40,7 @@ class AddNoteFragment : Fragment() {
         if (binding.editAddNote.text!!.isNotEmpty())
             addNoteViewModel.addNote(binding.editAddNote.text.toString())
         binding.editAddNote.hideKeyboard()
-        findNavController().navigate(R.id.action_addNoteFragment_to_overviewFragment)
+        findNavController().navigate(R.id.action_addNoteFragment_to_notesFragment)
     }
 
     private fun View.hideKeyboard() {

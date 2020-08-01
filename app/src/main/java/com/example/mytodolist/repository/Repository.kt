@@ -2,7 +2,6 @@ package com.example.mytodolist.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.mytodolist.repository.database.Note
 import com.example.mytodolist.repository.database.NoteDatabase
 
 class Repository private constructor(application: Application) {

@@ -11,7 +11,7 @@
             android:id="@+id/coordinatorLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.overview.OverviewFragment">
+            tools:context=".ui.overview.NotesFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/notes_list"

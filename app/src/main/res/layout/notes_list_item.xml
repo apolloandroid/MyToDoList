@@ -13,28 +13,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/check_done"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:checked="@{note.noteDone}" />
+
             <TextView
                 android:id="@+id/note_item_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:gravity="left|center"
+                android:onClick="@{()->viewmodel.viewNoteDetails(note.noteId)}"
                 android:padding="8dp"
                 android:text="@{note.noteText}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                ap
+                />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <data>
 
+        <import type="android.widget.CompoundButton" />
+
         <variable
             name="note"
-            type="com.example.mytodolist.repository.database.Note" />
+            type="com.example.mytodolist.repository.Note" />
 
+        <variable
+            name="viewmodel"
+            type="com.example.mytodolist.ui.overview.NotesViewModel" />
     </data>
 </layout>
