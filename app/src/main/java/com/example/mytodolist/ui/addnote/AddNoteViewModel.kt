@@ -10,12 +10,17 @@ class AddNoteViewModel(private val repository: Repository, application: Applicat
     AndroidViewModel(application) {
     private val newNote = Note()
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+    private val viewModelScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     fun addNote(noteText: String) {
         newNote.noteText = noteText
-        uiScope.launch {
+        viewModelScope.launch {
             repository.insertNote(newNote)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

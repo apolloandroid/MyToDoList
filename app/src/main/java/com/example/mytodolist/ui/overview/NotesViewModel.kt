@@ -13,8 +13,8 @@ class NotesViewModel constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
-    private val overviewViewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.IO + overviewViewModelJob)
+    private val viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     var notes: LiveData<List<Note>> = getAllNotes()
     private val newNote = Note()
@@ -75,5 +75,10 @@ class NotesViewModel constructor(
 
     private fun getAllNotes(): LiveData<List<Note>> {
         return runBlocking { repository.getAllNotes() }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 }

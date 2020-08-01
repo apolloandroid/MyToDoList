@@ -32,4 +32,9 @@ class NoteDetailsViewModel(
             repository.updateNote(_currentNote.value as Note)
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 }
