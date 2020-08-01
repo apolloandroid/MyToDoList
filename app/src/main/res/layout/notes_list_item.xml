@@ -15,10 +15,11 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/check_done"
+                android:id="@+id/done_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:checked="@{note.noteDone}" />
+                android:checked="@{note.noteDone}"
+                android:onClick="@{(view)->viewmodel.onCheckDoneClick(note, ((CompoundButton)view).isChecked())}" />
 
             <TextView
                 android:id="@+id/note_item_text"
@@ -30,8 +31,7 @@
                 android:padding="8dp"
                 android:text="@{note.noteText}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                ap
-                />
+                app:doneNote="@{note.noteDone}" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

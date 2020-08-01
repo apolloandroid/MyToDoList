@@ -50,7 +50,6 @@ class NotesFragment : Fragment(){
     private fun initNotesList(recyclerView: RecyclerView) {
         notesListAdapter = NotesListAdapter(notesViewModel)
         recyclerView.adapter = notesListAdapter
-//        notesListAdapter.onCheckDoneClickListener = this
         val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
         recyclerView.setHasFixedSize(true)
         noteTouchHelper.attachToRecyclerView(binding.notesList)
@@ -76,11 +75,6 @@ class NotesFragment : Fragment(){
             notesViewModel.createQuickNote(binding.editNoteOverview.text.toString())
         binding.editNoteOverview.text.clear()
     }
-
-
-//    override fun onCheckDoneClicked(position: Int, noteItem: Note) {
-//        overviewViewModel.onCheckDoneClick(noteItem)
-//    }
 
     private fun navigateToNoteDetailFragment(noteId: Long) {
         findNavController().navigate(

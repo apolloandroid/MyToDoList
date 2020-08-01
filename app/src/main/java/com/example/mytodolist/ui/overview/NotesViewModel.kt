@@ -14,7 +14,7 @@ class NotesViewModel constructor(
     application: Application
 ) : AndroidViewModel(application) {
     private val overviewViewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.IO + overviewViewModelJob)
+    private val viewModelScope = CoroutineScope(Dispatchers.IO + overviewViewModelJob)
 
     var notes: LiveData<List<Note>> = getAllNotes()
     private val newNote = Note()
@@ -24,7 +24,7 @@ class NotesViewModel constructor(
         get() = _viewNoteDetailsEvent
 
     fun onSwipeNote(note: Note) {
-        uiScope.launch {
+        viewModelScope.launch {
             repository.deleteNote(note.noteId)
         }
     }
@@ -35,20 +35,22 @@ class NotesViewModel constructor(
 
     fun createQuickNote(noteText: String) {
         newNote.noteText = noteText
-        uiScope.launch {
+        viewModelScope.launch {
             repository.insertNote(newNote)
         }
     }
 
     fun restoreDeletedNote(deletedNote: Note) {
-        uiScope.launch {
+        viewModelScope.launch {
             repository.insertNote(deletedNote)
         }
     }
 
-    fun onCheckDoneClick(note: Note) {
-        note.noteDone = !note.noteDone
-        uiScope.launch {
+    fun onCheckDoneClick(note: Note, done: Boolean) {
+        if (done) {
+
+        }
+        viewModelScope.launch {
             repository.updateNote(note)
         }
     }
