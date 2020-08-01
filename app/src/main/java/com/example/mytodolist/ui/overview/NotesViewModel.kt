@@ -19,9 +19,34 @@ class NotesViewModel constructor(
     var notes: LiveData<List<Note>> = getAllNotes()
     private val newNote = Note()
 
-    private var _viewNoteDetailsEvent = MutableLiveData<Long>()
-    val viewNoteDetails: LiveData<Long>
-        get() = _viewNoteDetailsEvent
+    private var _onViewNoteDetails = MutableLiveData<Long>()
+    val onViewNoteDetails: LiveData<Long>
+        get() = _onViewNoteDetails
+
+    private var _onCreateNote = MutableLiveData<Boolean>()
+    val onCreateNote: LiveData<Boolean>
+        get() = _onCreateNote
+
+    private var _onCreateQuickNote = MutableLiveData<Boolean>()
+    val onCreateQuickNote: LiveData<Boolean>
+        get() = _onCreateQuickNote
+
+    fun createNote() {
+        _onCreateNote.value = true
+    }
+
+    fun createQuickNote(noteText: String) {
+        if (noteText.isNotEmpty()) {
+            newNote.noteText = noteText
+            viewModelScope.launch {
+                repository.insertNote(newNote)
+            }
+        }
+    }
+
+    fun onCreateQuickNoteListener() {
+        _onCreateQuickNote.value = true
+    }
 
     fun onSwipeNote(note: Note) {
         viewModelScope.launch {
@@ -30,14 +55,7 @@ class NotesViewModel constructor(
     }
 
     fun viewNoteDetails(noteId: Long) {
-        _viewNoteDetailsEvent.value = noteId
-    }
-
-    fun createQuickNote(noteText: String) {
-        newNote.noteText = noteText
-        viewModelScope.launch {
-            repository.insertNote(newNote)
-        }
+        _onViewNoteDetails.value = noteId
     }
 
     fun restoreDeletedNote(deletedNote: Note) {

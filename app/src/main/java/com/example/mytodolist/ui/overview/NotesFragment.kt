@@ -17,7 +17,7 @@ import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.util.NoteTouchHelper
 import com.google.android.material.snackbar.Snackbar
 
-class NotesFragment : Fragment(){
+class NotesFragment : Fragment() {
     private val notesViewModel: NotesViewModel by lazy { initViewModel() }
     private lateinit var binding: FragmentNotesBinding
     private lateinit var notesListAdapter: NotesListAdapter
@@ -27,14 +27,20 @@ class NotesFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, container, false)
-        binding.buttonCreateNote.setOnClickListener { onCreateNoteListener() }
-        binding.buttonFastCreateNote.setOnClickListener { onCreateQuickNoteListener() }
+        binding.viewmodel = notesViewModel
         initNotesList(binding.notesList)
+
         notesViewModel.notes.observe(this, Observer { notes ->
             notesListAdapter.submitList(notes)
         })
 
-        notesViewModel.viewNoteDetails.observe(this, Observer {
+        notesViewModel.onCreateNote.observe(this, Observer {
+            if (it) navigateToAddNoteFragment()
+        })
+
+        notesViewModel.onCreateQuickNote.observe(this, Observer { createQuickNote() })
+
+        notesViewModel.onViewNoteDetails.observe(this, Observer {
             navigateToNoteDetailFragment(it)
         })
         return binding.root
@@ -66,14 +72,13 @@ class NotesFragment : Fragment(){
         }
     }
 
-    private fun onCreateNoteListener() {
-        findNavController().navigate(R.id.action_notesFragment_to_addNoteFragment)
+    private fun createQuickNote() {
+        notesViewModel.createQuickNote(binding.editQuickNote.text.toString())
+        binding.editQuickNote.text.clear()
     }
 
-    private fun onCreateQuickNoteListener() {
-        if (binding.editNoteOverview.text!!.isNotEmpty())
-            notesViewModel.createQuickNote(binding.editNoteOverview.text.toString())
-        binding.editNoteOverview.text.clear()
+    private fun navigateToAddNoteFragment() {
+        findNavController().navigate(R.id.action_notesFragment_to_addNoteFragment)
     }
 
     private fun navigateToNoteDetailFragment(noteId: Long) {

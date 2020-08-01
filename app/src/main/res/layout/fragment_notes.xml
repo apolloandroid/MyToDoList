@@ -35,6 +35,7 @@
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryLight"
             android:elevation="4dp"
+            android:onClick="@{()->viewmodel.createNote()}"
             app:layout_constraintBottom_toTopOf="@+id/linear_layout_overview"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_create_note" />
@@ -48,7 +49,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <AutoCompleteTextView
-                android:id="@+id/edit_note_overview"
+                android:id="@+id/edit_quick_note"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_gravity="center"
@@ -69,16 +70,23 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/button_fast_create_note"
+                android:id="@+id/button_create_quick_note"
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
+                android:onClick="@{()->viewmodel.onCreateQuickNoteListener()}"
                 app:srcCompat="@drawable/ic_fast_create_note" />
 
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.mytodolist.ui.overview.NotesViewModel" />
+    </data>
 </layout>
