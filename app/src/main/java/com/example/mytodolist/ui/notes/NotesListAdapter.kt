@@ -1,8 +1,7 @@
-package com.example.mytodolist.ui.overview
+package com.example.mytodolist.ui.notes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter

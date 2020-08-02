@@ -1,4 +1,4 @@
-package com.example.mytodolist.ui.editnote
+package com.example.mytodolist.ui.notedetails
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

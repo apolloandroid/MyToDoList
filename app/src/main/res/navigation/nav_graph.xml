@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.example.mytodolist.ui.overview.NotesFragment"
+        android:name="com.example.mytodolist.ui.notes.NotesFragment"
         android:label="NotesFragment">
         <action
             android:id="@+id/action_notesFragment_to_addNoteFragment"
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/noteDetailsFragment"
-        android:name="com.example.mytodolist.ui.editnote.NoteDetailsFragment"
+        android:name="com.example.mytodolist.ui.notedetails.NoteDetailsFragment"
         android:label="NoteDetailsFragment" >
         <action
             android:id="@+id/action_noteDetailsFragment_to_notesFragment"

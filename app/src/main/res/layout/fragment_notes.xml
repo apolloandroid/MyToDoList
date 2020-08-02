@@ -11,7 +11,7 @@
             android:id="@+id/coordinatorLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.overview.NotesFragment">
+            tools:context=".ui.notes.NotesFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/notes_list"
@@ -87,6 +87,6 @@
 
         <variable
             name="viewmodel"
-            type="com.example.mytodolist.ui.overview.NotesViewModel" />
+            type="com.example.mytodolist.ui.notes.NotesViewModel" />
     </data>
 </layout>
