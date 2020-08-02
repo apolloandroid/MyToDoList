@@ -51,7 +51,6 @@ class NotesListAdapter(private val notesViewModel: NotesViewModel) :
             return oldItem.noteText == newItem.noteText
         }
     }
-
 }
 
 
