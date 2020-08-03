@@ -43,13 +43,11 @@ class NotesListAdapter(private val notesViewModel: NotesViewModel) :
     }
 
     private class NotesDiffCallBack : DiffUtil.ItemCallback<Note>() {
-        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.noteId == newItem.noteId
-        }
+        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean =
+            oldItem.noteId == newItem.noteId
 
-        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.noteText == newItem.noteText
-        }
+        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean =
+            oldItem.noteText == newItem.noteText
     }
 }
 
