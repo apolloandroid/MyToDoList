@@ -9,14 +9,15 @@ import com.example.mytodolist.repository.Note
 import kotlinx.coroutines.*
 
 
-class NotesViewModel constructor(
+class NotesViewModel
+constructor(
     private val repository: Repository,
     application: Application
 ) : AndroidViewModel(application) {
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
-    var notes: LiveData<List<Note>> = getAllNotes()
+    val notes: LiveData<List<Note>> = getAllNotes()
     private val newNote = Note()
 
     private var _onViewNoteDetails = MutableLiveData<Long>()
