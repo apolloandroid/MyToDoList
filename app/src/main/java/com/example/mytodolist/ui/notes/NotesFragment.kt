@@ -78,12 +78,16 @@ class NotesFragment : Fragment() {
     }
 
     private fun navigateToAddNoteFragment() {
-        findNavController().navigate(R.id.action_notesFragment_to_addNoteFragment)
+        if (findNavController().currentDestination?.id == R.id.notesFragment) {
+            findNavController().navigate(R.id.action_notesFragment_to_addNoteFragment)
+        }
     }
 
     private fun navigateToNoteDetailFragment(noteId: Long) {
-        findNavController().navigate(
-            NotesFragmentDirections.actionNotesFragmentToNoteDetailsFragment(noteId)
-        )
+        if (findNavController().currentDestination?.id == R.id.notesFragment) {
+            findNavController().navigate(
+                NotesFragmentDirections.actionNotesFragmentToNoteDetailsFragment(noteId)
+            )
+        }
     }
 }
