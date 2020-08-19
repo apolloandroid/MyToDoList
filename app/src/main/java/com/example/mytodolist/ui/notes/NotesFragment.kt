@@ -29,20 +29,7 @@ class NotesFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, container, false)
         binding.viewmodel = notesViewModel
         initNotesList(binding.notesList)
-
-        notesViewModel.notes.observe(this, Observer { notes ->
-            notesListAdapter.submitList(notes)
-        })
-
-        notesViewModel.onCreateNote.observe(this, Observer {
-            if (it) navigateToAddNoteFragment()
-        })
-
-        notesViewModel.onCreateQuickNote.observe(this, Observer { createQuickNote() })
-
-        notesViewModel.onViewNoteDetails.observe(this, Observer {
-            navigateToNoteDetailFragment(it)
-        })
+        initObservers()
         return binding.root
     }
 
@@ -59,6 +46,22 @@ class NotesFragment : Fragment() {
         val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
         recyclerView.setHasFixedSize(true)
         noteTouchHelper.attachToRecyclerView(binding.notesList)
+    }
+
+    private fun initObservers(){
+        notesViewModel.notes.observe(this, Observer { notes ->
+            notesListAdapter.submitList(notes)
+        })
+
+        notesViewModel.onCreateNote.observe(this, Observer {
+            if (it) navigateToAddNoteFragment()
+        })
+
+        notesViewModel.onCreateQuickNote.observe(this, Observer { createQuickNote() })
+
+        notesViewModel.onViewNoteDetails.observe(this, Observer {
+            navigateToNoteDetailFragment(it)
+        })
     }
 
     private fun initSwipeHelper(): NoteTouchHelper = object : NoteTouchHelper() {
