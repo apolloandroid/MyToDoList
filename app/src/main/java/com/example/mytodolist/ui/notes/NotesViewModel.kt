@@ -1,19 +1,18 @@
 package com.example.mytodolist.ui.notes
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.Note
 import kotlinx.coroutines.*
 
-
 class NotesViewModel
 constructor(
     private val repository: Repository,
-    application: Application
-) : AndroidViewModel(application) {
+    context: Context
+) : ViewModel() {
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 

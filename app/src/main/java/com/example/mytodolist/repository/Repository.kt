@@ -1,17 +1,17 @@
 package com.example.mytodolist.repository
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.example.mytodolist.repository.database.NoteDatabase
 
-class Repository private constructor(application: Application) {
-    private val noteDatabaseDao = NoteDatabase.getInstance(application).noteDataBaseDao
+class Repository private constructor(context: Context) {
+    private val noteDatabaseDao = NoteDatabase.getInstance(context).noteDataBaseDao
 
     companion object {
-        fun getInstance(application: Application): Repository {
+        fun getInstance(context: Context): Repository {
             var instance: Repository? = null
             if (instance == null) {
-                instance = Repository(application)
+                instance = Repository(context)
             }
             return instance
         }
