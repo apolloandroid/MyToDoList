@@ -3,6 +3,8 @@ package com.example.mytodolist.di
 import android.content.Context
 import androidx.fragment.app.Fragment
 import com.example.mytodolist.repository.Repository
+import com.example.mytodolist.repository.database.NoteDataBaseDao
+import com.example.mytodolist.repository.database.NoteDatabase
 import com.example.mytodolist.ui.notes.NotesViewModel
 import com.example.mytodolist.ui.notes.NotesViewModelFactory
 import dagger.Module
@@ -17,7 +19,17 @@ class NotesFragmentModule(private val notesFragment: Fragment, private val conte
     }
 
     @Provides
-    fun provideRepository(repository: Repository): Repository {
-        return repository
+    fun provideRepository(noteDatabaseDao: NoteDataBaseDao): Repository {
+        return Repository(context, noteDatabaseDao)
+    }
+
+    @Provides
+    fun provideDatabase(): NoteDatabase {
+        return NoteDatabase.getInstance(context)
+    }
+
+    @Provides
+    fun provideNotesDao(database: NoteDatabase): NoteDataBaseDao {
+        return database.noteDataBaseDao
     }
 }
