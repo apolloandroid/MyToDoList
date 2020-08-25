@@ -42,7 +42,7 @@
 
         <variable
             name="note"
-            type="com.example.mytodolist.repository.Note" />
+            type="com.example.mytodolist.repository.database.Note" />
 
         <variable
             name="viewmodel"
