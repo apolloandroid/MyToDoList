@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytodolist.repository.Repository
-import com.example.mytodolist.repository.Note
+import com.example.mytodolist.repository.database.Note
 import kotlinx.coroutines.*
 
 class NotesViewModel

@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentNotesBinding
+import com.example.mytodolist.di.DaggerAppComponent
+import com.example.mytodolist.di.NotesFragmentModule
 import com.example.mytodolist.ui.notes.NotesListAdapter.NoteViewHolder
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.util.NoteTouchHelper
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class NotesFragment : Fragment() {
-    private val notesViewModel: NotesViewModel by lazy { initViewModel() }
+    @Inject
+    lateinit var notesViewModel: NotesViewModel
     private lateinit var binding: FragmentNotesBinding
     private lateinit var notesListAdapter: NotesListAdapter
 
@@ -27,17 +31,18 @@ class NotesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, container, false)
+        injectFragment()
         binding.viewmodel = notesViewModel
         initNotesList(binding.notesList)
         initObservers()
         return binding.root
     }
 
-    private fun initViewModel(): NotesViewModel {
-        val application = requireNotNull(activity).application
-        val repository = Repository.getInstance(application)
-        val overviewViewModelFactory = NotesViewModelFactory(repository, application)
-        return overviewViewModelFactory.create(NotesViewModel::class.java)
+    private fun injectFragment() {
+        val component = DaggerAppComponent.builder()
+            .notesFragmentModule(NotesFragmentModule(this, context ?: return))
+            .build()
+        component?.injectNotesFragment(this)
     }
 
     private fun initNotesList(recyclerView: RecyclerView) {
@@ -48,7 +53,7 @@ class NotesFragment : Fragment() {
         noteTouchHelper.attachToRecyclerView(binding.notesList)
     }
 
-    private fun initObservers(){
+    private fun initObservers() {
         notesViewModel.notes.observe(this, Observer { notes ->
             notesListAdapter.submitList(notes)
         })

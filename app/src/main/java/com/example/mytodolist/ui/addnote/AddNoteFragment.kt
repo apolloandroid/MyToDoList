@@ -22,19 +22,18 @@ class AddNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_note_fragment, container, false)
-        addNoteViewModel = initViewModel()
         binding.buttonAddNote.setOnClickListener {
             onAddButtonClickListener()
         }
         return binding.root
     }
 
-    private fun initViewModel(): AddNoteViewModel {
-        val application = requireNotNull(activity).application
-        val repository = Repository.getInstance(application)
-        val addNoteViewModelFactory = AddNoteViewModelFactory(repository, application)
-        return addNoteViewModelFactory.create(AddNoteViewModel::class.java)
-    }
+//    private fun initViewModel(): AddNoteViewModel {
+//        val application = requireNotNull(activity).application
+//        val repository = Repository.getInstance(application)
+//        val addNoteViewModelFactory = AddNoteViewModelFactory(repository, application)
+//        return addNoteViewModelFactory.create(AddNoteViewModel::class.java)
+//    }
 
     private fun onAddButtonClickListener() {
         if (binding.editAddNote.text!!.isNotEmpty())

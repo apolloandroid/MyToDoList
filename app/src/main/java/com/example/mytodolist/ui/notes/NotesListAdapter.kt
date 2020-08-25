@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.NotesListItemBinding
-import com.example.mytodolist.repository.Note
+import com.example.mytodolist.repository.database.Note
 
 class NotesListAdapter(private val notesViewModel: NotesViewModel) :
     ListAdapter<Note, NotesListAdapter.NoteViewHolder>(NotesDiffCallBack()) {

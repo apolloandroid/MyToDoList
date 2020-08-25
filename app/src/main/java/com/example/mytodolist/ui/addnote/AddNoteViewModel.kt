@@ -3,7 +3,7 @@ package com.example.mytodolist.ui.addnote
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.mytodolist.repository.Repository
-import com.example.mytodolist.repository.Note
+import com.example.mytodolist.repository.database.Note
 import kotlinx.coroutines.*
 
 class AddNoteViewModel(private val repository: Repository, application: Application) :

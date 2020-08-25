@@ -21,7 +21,7 @@ class NoteDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val currentNoteId = NoteDetailsFragmentArgs.fromBundle(arguments!!).currentNoteId
-        noteDetailsViewModel = initViewModel(currentNoteId)
+//        noteDetailsViewModel = initViewModel(currentNoteId)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_details, container, false)
         binding.buttonEditNote.setOnClickListener {
             onEditNoteButtonListener(binding.editNoteText.text.toString())
@@ -33,13 +33,13 @@ class NoteDetailsFragment : Fragment() {
         return binding.root
     }
 
-    private fun initViewModel(currentNoteId: Long): NoteDetailsViewModel {
-        val application = requireNotNull(activity).application
-        val repository = Repository.getInstance(application)
-        val editNoteViewModelFactory =
-            NoteDetailsViewModelFactory(repository, application, currentNoteId)
-        return editNoteViewModelFactory.create(NoteDetailsViewModel::class.java)
-    }
+//    private fun initViewModel(currentNoteId: Long): NoteDetailsViewModel {
+//        val application = requireNotNull(activity).application
+//        val repository = Repository.getInstance(application)
+//        val editNoteViewModelFactory =
+//            NoteDetailsViewModelFactory(repository, application, currentNoteId)
+//        return editNoteViewModelFactory.create(NoteDetailsViewModel::class.java)
+//    }
 
     private fun showCurrentNoteText(currentNoteId: Long) {
         noteDetailsViewModel.showCurrentNoteText(currentNoteId)

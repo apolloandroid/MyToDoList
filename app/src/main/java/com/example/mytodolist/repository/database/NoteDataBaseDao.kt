@@ -2,7 +2,6 @@ package com.example.mytodolist.repository.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.mytodolist.repository.Note
 
 @Dao
 interface NoteDataBaseDao {

@@ -1,4 +1,4 @@
-package com.example.mytodolist.repository
+package com.example.mytodolist.repository.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
