@@ -40,17 +40,9 @@ class NotesFragment : Fragment() {
 
     private fun injectFragment() {
         val component = DaggerAppComponent.builder()
-            .notesFragmentModule(NotesFragmentModule(this, context ?: return))
+            .notesFragmentModule(NotesFragmentModule(context ?: return))
             .build()
         component?.injectNotesFragment(this)
-    }
-
-    private fun initNotesList(recyclerView: RecyclerView) {
-        notesListAdapter = NotesListAdapter(notesViewModel)
-        recyclerView.adapter = notesListAdapter
-        val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
-        recyclerView.setHasFixedSize(true)
-        noteTouchHelper.attachToRecyclerView(binding.notesList)
     }
 
     private fun initObservers() {
@@ -67,6 +59,14 @@ class NotesFragment : Fragment() {
         notesViewModel.onViewNoteDetails.observe(this, Observer {
             navigateToNoteDetailFragment(it)
         })
+    }
+
+    private fun initNotesList(recyclerView: RecyclerView) {
+        notesListAdapter = NotesListAdapter(notesViewModel)
+        recyclerView.adapter = notesListAdapter
+        val noteTouchHelper = ItemTouchHelper(initSwipeHelper())
+        recyclerView.setHasFixedSize(true)
+        noteTouchHelper.attachToRecyclerView(binding.notesList)
     }
 
     private fun initSwipeHelper(): NoteTouchHelper = object : NoteTouchHelper() {

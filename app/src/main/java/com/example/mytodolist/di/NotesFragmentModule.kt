@@ -11,7 +11,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class NotesFragmentModule(private val notesFragment: Fragment, private val context: Context) {
+class NotesFragmentModule(private val context: Context) {
     @Provides
     fun provideNotesViewModel(repository: Repository): NotesViewModel {
         val notesViewModelFactory = NotesViewModelFactory(repository, context)
