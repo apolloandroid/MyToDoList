@@ -11,10 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.AddNoteFragmentBinding
-import com.example.mytodolist.repository.Repository
+import com.example.mytodolist.di.addnotefragment.AddNoteFragmentModule
+import com.example.mytodolist.di.addnotefragment.DaggerAddNoteComponent
+import javax.inject.Inject
+
 
 class AddNoteFragment : Fragment() {
-    private lateinit var addNoteViewModel: AddNoteViewModel
+    @Inject
+    lateinit var addNoteViewModel: AddNoteViewModel
     private lateinit var binding: AddNoteFragmentBinding
 
     override fun onCreateView(
@@ -22,24 +26,32 @@ class AddNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_note_fragment, container, false)
+        injectFragment()
         binding.buttonAddNote.setOnClickListener {
             onAddButtonClickListener()
         }
         return binding.root
     }
 
-//    private fun initViewModel(): AddNoteViewModel {
-//        val application = requireNotNull(activity).application
-//        val repository = Repository.getInstance(application)
-//        val addNoteViewModelFactory = AddNoteViewModelFactory(repository, application)
-//        return addNoteViewModelFactory.create(AddNoteViewModel::class.java)
-//    }
+    private fun injectFragment() {
+        val component = DaggerAddNoteComponent.builder()
+            .addNoteFragmentModule(AddNoteFragmentModule(context ?: return))
+            .build()
+        component?.injectAddNoteFragment(this)
+    }
 
     private fun onAddButtonClickListener() {
         if (binding.editAddNote.text!!.isNotEmpty())
             addNoteViewModel.addNote(binding.editAddNote.text.toString())
+
         binding.editAddNote.hideKeyboard()
-        findNavController().navigate(R.id.action_addNoteFragment_to_notesFragment)
+        navigateToNotesFragment()
+    }
+
+    private fun navigateToNotesFragment() {
+        if (findNavController().currentDestination?.id == R.id.addNoteFragment) {
+            findNavController().navigate(R.id.action_addNoteFragment_to_notesFragment)
+        }
     }
 
     private fun View.hideKeyboard() {
