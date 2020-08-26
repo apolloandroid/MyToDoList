@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.AddNoteFragmentBinding
@@ -27,6 +28,9 @@ class AddNoteFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_note_fragment, container, false)
         injectFragment()
+        addNoteViewModel.onAddNote.observe(this, Observer {
+            if (it) navigateToNotesFragment()
+        })
         binding.buttonAddNote.setOnClickListener {
             onAddButtonClickListener()
         }
@@ -43,12 +47,10 @@ class AddNoteFragment : Fragment() {
     private fun onAddButtonClickListener() {
         if (binding.editAddNote.text!!.isNotEmpty())
             addNoteViewModel.addNote(binding.editAddNote.text.toString())
-
-        binding.editAddNote.hideKeyboard()
-        navigateToNotesFragment()
     }
 
     private fun navigateToNotesFragment() {
+        binding.editAddNote.hideKeyboard()
         if (findNavController().currentDestination?.id == R.id.addNoteFragment) {
             findNavController().navigate(R.id.action_addNoteFragment_to_notesFragment)
         }
