@@ -1,4 +1,4 @@
-package com.example.mytodolist.di
+package com.example.mytodolist.di.notesfragment
 
 import android.content.Context
 import com.example.mytodolist.repository.Repository
