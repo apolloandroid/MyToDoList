@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentNotesBinding
-import com.example.mytodolist.di.DaggerNotesComponent
+import com.example.mytodolist.di.notesfragment.DaggerNotesComponent
 import com.example.mytodolist.di.notesfragment.NotesFragmentModule
 import com.example.mytodolist.ui.notes.NotesListAdapter.NoteViewHolder
 import com.example.mytodolist.util.NoteTouchHelper
