@@ -15,7 +15,6 @@ import com.example.mytodolist.databinding.FragmentNotesBinding
 import com.example.mytodolist.di.DaggerAppComponent
 import com.example.mytodolist.di.NotesFragmentModule
 import com.example.mytodolist.ui.notes.NotesListAdapter.NoteViewHolder
-import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.util.NoteTouchHelper
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
