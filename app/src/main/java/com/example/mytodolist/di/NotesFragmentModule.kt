@@ -1,7 +1,6 @@
 package com.example.mytodolist.di
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import com.example.mytodolist.repository.Repository
 import com.example.mytodolist.repository.database.NoteDataBaseDao
 import com.example.mytodolist.repository.database.NoteDatabase
