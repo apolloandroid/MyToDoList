@@ -22,15 +22,20 @@ class AddNoteFragment : Fragment() {
     lateinit var addNoteViewModel: AddNoteViewModel
     private lateinit var binding: AddNoteFragmentBinding
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectFragment()
+        addNoteViewModel.onAddNote.observe(this, Observer {
+            if (it) navigateToNotesFragment()
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.add_note_fragment, container, false)
-        injectFragment()
-        addNoteViewModel.onAddNote.observe(this, Observer {
-            if (it) navigateToNotesFragment()
-        })
+
         binding.buttonAddNote.setOnClickListener {
             onAddButtonClickListener()
         }
