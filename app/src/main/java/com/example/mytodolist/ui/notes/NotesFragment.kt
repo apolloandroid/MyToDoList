@@ -25,15 +25,19 @@ class NotesFragment : Fragment() {
     private lateinit var binding: FragmentNotesBinding
     private lateinit var notesListAdapter: NotesListAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injectFragment()
+        initObservers()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notes, container, false)
-        injectFragment()
         binding.viewmodel = notesViewModel
         initNotesList(binding.notesList)
-        initObservers()
         return binding.root
     }
 
