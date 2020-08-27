@@ -1,56 +1,76 @@
 package com.example.mytodolist.ui.notedetails
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentNoteDetailsBinding
-import com.example.mytodolist.repository.Repository
+import com.example.mytodolist.di.notedetails.DaggerNoteDetailsComponent
+import com.example.mytodolist.di.notedetails.NoteDetailsFragmentModule
+import javax.inject.Inject
 
 class NoteDetailsFragment : Fragment() {
-    private lateinit var noteDetailsViewModel: NoteDetailsViewModel
+    @Inject
+    lateinit var noteDetailsViewModel: NoteDetailsViewModel
     private lateinit var binding: FragmentNoteDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_note_details, container, false)
+
         val currentNoteId = NoteDetailsFragmentArgs.fromBundle(arguments!!).currentNoteId
-//        noteDetailsViewModel = initViewModel(currentNoteId)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_details, container, false)
+
+        injectFragment(currentNoteId)
+
+        initObservers()
+
         binding.buttonEditNote.setOnClickListener {
             onEditNoteButtonListener(binding.editNoteText.text.toString())
         }
-        showCurrentNoteText(currentNoteId)
-        noteDetailsViewModel.currentNote.observe(viewLifecycleOwner, Observer { currentNote ->
-            binding.editNoteText.text?.insert(0, currentNote.noteText)
-        })
+
         return binding.root
     }
 
-//    private fun initViewModel(currentNoteId: Long): NoteDetailsViewModel {
-//        val application = requireNotNull(activity).application
-//        val repository = Repository.getInstance(application)
-//        val editNoteViewModelFactory =
-//            NoteDetailsViewModelFactory(repository, application, currentNoteId)
-//        return editNoteViewModelFactory.create(NoteDetailsViewModel::class.java)
-//    }
+    private fun injectFragment(currentNoteId: Long) {
+        val component = DaggerNoteDetailsComponent.builder()
+            .noteDetailsFragmentModule(NoteDetailsFragmentModule(context ?: return, currentNoteId))
+            .build()
+        component.injectNoteDetailsFragment(this)
+    }
 
-    private fun showCurrentNoteText(currentNoteId: Long) {
-        noteDetailsViewModel.showCurrentNoteText(currentNoteId)
+    private fun initObservers() {
+        noteDetailsViewModel.currentNote.observe(viewLifecycleOwner, Observer { currentNote ->
+            binding.editNoteText.text?.insert(0, currentNote.noteText)
+        })
+        noteDetailsViewModel.onNoteUpdated.observe(viewLifecycleOwner, Observer {
+            if (it) navigateToNoteFragment()
+        })
     }
 
     private fun onEditNoteButtonListener(currentNoteText: String) {
         noteDetailsViewModel.updateNote(currentNoteText)
-        findNavController().navigate(
-            NoteDetailsFragmentDirections.actionNoteDetailsFragmentToNotesFragment(
-                0
-            )
-        )
+        binding.editNoteText.hideKeyboard()
+    }
+
+    private fun navigateToNoteFragment() {
+        if (findNavController().currentDestination?.id == R.id.noteDetailsFragment) {
+            findNavController().navigate(R.id.action_noteDetailsFragment_to_notesFragment)
+        }
+    }
+
+    private fun View.hideKeyboard() {
+        val inputMethodManager =
+            context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
