@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mytodolist.R
 import com.example.mytodolist.databinding.FragmentNoteDetailsBinding
-import com.example.mytodolist.di.notedetails.DaggerNoteDetailsComponent
-import com.example.mytodolist.di.notedetails.NoteDetailsFragmentModule
+import com.example.mytodolist.di.notedetailsfragment.DaggerNoteDetailsComponent
+import com.example.mytodolist.di.notedetailsfragment.NoteDetailsFragmentModule
 import javax.inject.Inject
 
 class NoteDetailsFragment : Fragment() {

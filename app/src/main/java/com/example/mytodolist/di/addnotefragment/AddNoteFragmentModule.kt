@@ -17,6 +17,7 @@ class AddNoteFragmentModule(private val context: Context) {
         return addNoteViewModelFactory.create(AddNoteViewModel::class.java)
     }
 
+
     @Provides
     fun provideRepository(noteDatabaseDao: NoteDataBaseDao): Repository {
         return Repository(context, noteDatabaseDao)

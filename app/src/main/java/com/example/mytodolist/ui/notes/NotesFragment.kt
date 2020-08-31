@@ -27,7 +27,7 @@ class NotesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectFragment()
+        injectViewModel()
         initObservers()
     }
 
@@ -41,7 +41,7 @@ class NotesFragment : Fragment() {
         return binding.root
     }
 
-    private fun injectFragment() {
+    private fun injectViewModel() {
         val component = DaggerNotesComponent.builder()
             .notesFragmentModule(NotesFragmentModule(context ?: return))
             .build()

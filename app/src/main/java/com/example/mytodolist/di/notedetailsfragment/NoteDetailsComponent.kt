@@ -1,4 +1,4 @@
-package com.example.mytodolist.di.notedetails
+package com.example.mytodolist.di.notedetailsfragment
 
 import com.example.mytodolist.ui.notedetails.NoteDetailsFragment
 import dagger.Component
